@@ -13,9 +13,9 @@ def handler(event, context):
     }
 
     Example:
-        ["( A ∨ ( A ∨ B ) ) → A", "A → ( B ∨ C )"]
+        ["( ( A ∨ ( A ∨ B ) ) → A )", "( A → ( B ∨ C ) )"]
 
-        expression = ( un_connective expression ) | ( expression bin_connective expression ) | sentence
+        expression = un_connective expression | ( expression bin_connective expression ) | sentence
         sentence = "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z" | “?”
         bin_connective = "∨" | "∧" | "→" | "↔"
         un_connective = "¬"
@@ -39,8 +39,12 @@ def handler(event, context):
     print("received event:")
     print(event)
 
-    # unpack premises
-
+    arg_premises = event[premises]
+    arg_conclusion = event[target]
+    arg_state = deque()
+    for premise in arg_premises:
+        arg_state.append(input_decoder(premise))
+    while arg_conclusion not in arg_state:
     # call solve
 
     # https://docs.python.org/3/library/queue.html#queue.Queue
@@ -59,8 +63,25 @@ def handler(event, context):
     }
 
 def input_decoder(string_expression):
-    string_expression.split()
-    for c in string_expression:
+    expression_list = string_expression.split()
+    token_stack = deque()
+    i = 0
+    while i < len(expression_list):
+        if expression_list[i] == ')':
+            sentence_2 = token_stack.pop()
+            bin_connective = token_stack.pop()
+            sentence_1 = token_stack.pop()
+            token_stack.pop()
+            expression1 = Expression(sentence_1, bin_connective, sentence_2)
+            token_stack.append(expression1)
+        elif expression_list[i] == '¬':
+            nexpression = Expression(expression_list[i+1],expression_list[i])
+            token_stack.append(nexpression)
+            i += 1
+        else:
+            token_stack.append(expression_list[i])
+        i += 1
+    return token_stack.pop()
 
 
 class Expression:
@@ -74,7 +95,7 @@ class Expression:
         if self.connective == None:
             return str(self.sentence_1)
         if self.connective != None and self.sentence_2 != None:
-            return f'{self.sentence_1} {self.connective} {self.sentence_2}'
+            return f'( {self.sentence_1} {self.connective} {self.sentence_2} )'
         if self.connective != None and self.sentence_2 == None:
             return f'{self.connective} {self.sentence_1}'
 
@@ -88,3 +109,4 @@ def solve(premises, target):
       if target in premises:
 
     # make decisions based on parsed input (recur)
+
