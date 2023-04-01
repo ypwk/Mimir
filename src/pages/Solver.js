@@ -2,7 +2,6 @@ import React, { useState } from "react";
 
 import Editor from "../components/Editor";
 
-import { NodeSelection, Transaction } from "@tiptap/pm/state";
 
 export default function Solver() {
   const [premises, setPremises] = useState([]);
@@ -28,13 +27,11 @@ export default function Solver() {
         enterCallback={(editor_view) => {
           const content = editor_view.state.doc.textContent;
           if (content !== "") {
-            console.log(editor_view);
-            let allSelect = new NodeSelection(editor_view.state.doc.resolve(0));
-            console.log(allSelect)
-            let trans = editor_view.state.tr
-            trans.setSelection(allSelect)
-            trans.deleteSelection()
-            editor_view.state.apply(trans)
+            console.log(editor_view)
+            let tr = editor_view.state.tr
+            tr.delete(0, content.length + 1)
+            editor_view.dispatch(tr)
+            console.log(editor_view.state.doc.textContent)
             setPremises((premises) => {
               let new_premises = premises.map((x) => x);
               new_premises.push(content);

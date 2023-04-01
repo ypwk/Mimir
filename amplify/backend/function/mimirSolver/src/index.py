@@ -13,9 +13,9 @@ def handler(event, context):
     }
 
     Example:
-        ["(A ∨ (A ∨ B)) → A", "A → ( B ∨ C)"]
+        ["( A ∨ ( A ∨ B ) ) → A", "A → ( B ∨ C )"]
 
-        expression = (un_connective expression) | (expression bin_connective expression) | sentence
+        expression = ( un_connective expression ) | ( expression bin_connective expression ) | sentence
         sentence = "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z" | “?”
         bin_connective = "∨" | "∧" | "→" | "↔"
         un_connective = "¬"
@@ -58,6 +58,10 @@ def handler(event, context):
         "body": json.dumps("Hello from your new Amplify Python lambda!"),
     }
 
+def input_decoder(string_expression):
+    string_expression.split()
+    for c in string_expression:
+
 
 class Expression:
 
@@ -65,6 +69,14 @@ class Expression:
         self.sentence_1 = sentence_1
         self.connective = connective
         self.sentence_2 = sentence_2
+
+    def __str__(self):
+        if self.connective == None:
+            return str(self.sentence_1)
+        if self.connective != None and self.sentence_2 != None:
+            return f'{self.sentence_1} {self.connective} {self.sentence_2}'
+        if self.connective != None and self.sentence_2 == None:
+            return f'{self.connective} {self.sentence_1}'
 
 
 # class Expression:
