@@ -1,0 +1,23 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-mimir-dev-231307-authRole",
+      "UnauthRoleArn": "arn:aws:iam::918583573114:role/amplify-mimir-dev-231307-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::918583573114:role/amplify-mimir-dev-231307-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-mimir-dev-231307-deployment",
+      "UnauthRoleName": "amplify-mimir-dev-231307-unauthRole",
+      "StackName": "amplify-mimir-dev-231307",
+      "StackId": "arn:aws:cloudformation:us-east-1:918583573114:stack/amplify-mimir-dev-231307/20351130-d03b-11ed-9c2d-0e9b06c19cdf",
+      "AmplifyAppId": "d1y2ynvvrmxp9z"
+    },
+    "categories": {
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d1y2ynvvrmxp9z",
+          "type": "manual"
+        }
+      }
+    }
+  }
+}
