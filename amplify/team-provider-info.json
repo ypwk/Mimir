@@ -17,6 +17,12 @@
           "appId": "d1y2ynvvrmxp9z",
           "type": "manual"
         }
+      },
+      "function": {
+        "mimirSolver": {
+          "deploymentBucketName": "amplify-mimir-dev-231307-deployment",
+          "s3Key": "amplify-builds/mimirSolver-56736537504443536631-build.zip"
+        }
       }
     }
   }

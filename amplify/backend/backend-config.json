@@ -1,4 +1,27 @@
 {
+  "api": {
+    "mimirREST": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "mimirSolver"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    }
+  },
+  "function": {
+    "mimirSolver": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
   "hosting": {
     "amplifyhosting": {
       "providerPlugin": "awscloudformation",
@@ -7,6 +30,22 @@
     }
   },
   "parameters": {
+    "AMPLIFY_function_mimirSolver_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "mimirSolver"
+        }
+      ]
+    },
+    "AMPLIFY_function_mimirSolver_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "mimirSolver"
+        }
+      ]
+    },
     "AMPLIFY_hosting_amplifyhosting_appId": {
       "usedBy": [
         {
