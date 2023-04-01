@@ -1,4 +1,4 @@
-# ProofMasterAI
+# Mimir
 An AI powered Symbolic Logic Proof Generator
 
 
