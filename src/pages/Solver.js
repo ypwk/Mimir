@@ -173,23 +173,26 @@ export default function Solver() {
       </div>
 
       <button className="menubutton" onClick={ () => {
-          fetch('https://32i8x8na33.execute-api.us-east-1.amazonaws.com/dev/api', {
+          if(premises.length > 0 && target.length > 0) {
+            fetch('https://32i8x8na33.execute-api.us-east-1.amazonaws.com/dev/api', {
             method: 'POST',
             body: JSON.stringify({
               "premises": premises,
               "target": target
             }),
             headers: {
-              'Content-type': 'application/json; charset=UTF-8',
-           },
-          }).then((response) => response.json())
-          .then((data) => {
-             setOutput(data);
-             console.log(data);
-          })
-          .catch((err) => {
-             console.log(err.message);
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+            }).then((response) => response.json())
+            .then((data) => {
+              setOutput(data);
+              console.log(data);
+            })
+            .catch((err) => {
+              console.log(err.message);
           });
+          }
+
           // const data = [["∧E", ['( K ∧ S )'], "K"],
           //               ["∧E", ['( K ∧ S )'], "S"],
           //               ["→E", ['( S → ¬ N )', 'S'], "¬ N"],

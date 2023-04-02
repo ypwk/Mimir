@@ -5,15 +5,18 @@
   src: url(Raleway-Light.ttf) format('truetype');
 }
 
+@font-face {
+  font-family: RalewayMega;
+  src: url(Raleway-VariableFont_wght.ttf) format('truetype');
+}
+
 /* Menu Button Styling */
 .menubutton {
   align-items: center;
-  background-color: #fff;
   box-sizing: border-box;
   color: #000;
   cursor: pointer;
   display: inline-flex;
-  fill: #000;
   font-size: 16px;
   font-weight: 600;
   height: 48px;
@@ -61,11 +64,10 @@
 }
 
 .ProseMirror {
-  font-family: RalewayLarge;
+  font-family: RalewayMega;
   font-size: 20px;
   background-color: #fff;
   box-sizing: border-box;
-  border: 2px solid #000;
   color: #000;
   cursor: pointer;
   letter-spacing: -0.8px;
@@ -73,6 +75,7 @@
   outline: 0;
   padding: 0.5em 1em;
   transition: all 0.3s;
+  font-weight: bold;
 }
 
 .ProseMirror:hover {
