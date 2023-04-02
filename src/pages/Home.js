@@ -23,7 +23,19 @@ export default function Home() {
       </div>
       <p className="downarrow">v</p>
       <div className="description">
-        <h2>Mimir is a </h2>
+        <h2 className="para">
+          Named after the Norse god of Wisdom, Mimir is an automatic proof engine built for use with symbolic logic.
+        </h2>
+
+        <h2 className="para">
+          Confused on where to start your symbolic logic proof? Need to study for a symbolic logic test? Mimir can help!
+        </h2>
+
+        <h2 className="para">
+          Mimir is hosted using Free Tier AWS Amplify, written with a Python AWS Lambda and AWS API Gateway backend and React frontend.
+        </h2>
+
+        <div className="para"></div>
       </div>
     </>
 

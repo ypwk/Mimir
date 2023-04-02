@@ -20,6 +20,7 @@ body {
   color: #fff;
   font-family: 'Raleway';
   font-weight: 100;
+  font-size: 20px;
 }
 
 header {
@@ -57,7 +58,7 @@ main {
 }
 
 .logoimg{
-  height: 3em;
+  height: 2.25em;
 }
 
 .title {
@@ -77,6 +78,16 @@ main {
   background-color: #151515;
   position: absolute;
   top: 100%;
+  width: 100%;
+  padding: 2em 1em 1em 2em;
+  letter-spacing: .12rem;
+  align-self: center;
+  text-align: center;
+  border: 5px, solid, #6ca6c1;
+}
+
+.para {
+  padding-top: 2em;
 }
 
 .downarrow {
@@ -93,7 +104,58 @@ main {
   margin: 1em;
 }
 
-.editor {
-  background-color: #fff;
+.editorbbox {
+  padding: 0.5em 0;
+}
 
+
+
+/* Table */
+.tableContainer {
+  margin-top: 1em;
+  width: 50%;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  background-color: transparent;
+
+  font-size: 24px;
+}
+
+.table {
+  width: 100%;
+  background-color: transparent;
+}
+
+.tableHeader {
+  background: #6ca6c1;
+}
+
+.tableBody {
+}
+
+.tableRow {
+    line-height: 1.2;
+    font-weight: unset!important;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #f2f2f2;
+}
+
+.tableCell {
+  padding-left: 30px;
+}
+.tableCell.Line {
+  border-right-style: none;
+  border-top-style: none;
+  border-left-style: solid;
+  border-bottom-style: none;
+}
+.tableCell.Bottom {
+  border-right-style: none;
+  border-top-style: none;
+  border-left-style: solid;
+  border-bottom-style: solid;
 }

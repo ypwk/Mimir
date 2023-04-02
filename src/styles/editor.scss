@@ -1,11 +1,14 @@
 /* Editor Styling */
 
+@font-face {
+  font-family: RalewayLarge;
+  src: url(Raleway-Light.ttf) format('truetype');
+}
 
 /* Menu Button Styling */
 .menubutton {
   align-items: center;
   background-color: #fff;
-  border: 2px solid #000;
   box-sizing: border-box;
   color: #000;
   cursor: pointer;
@@ -33,9 +36,9 @@
 }
 
 .menubutton:hover {
-  border-color: #06f;
-  color: #06f;
-  fill: #06f;
+  border-color: #6ca6c1;
+  color: #6ca6c1;
+  fill: #6ca6c1;
 }
 
 .menubutton:disabled {
@@ -46,9 +49,9 @@
 }
 
 .menubutton:active {
-  border-color: #06f;
-  color: #06f;
-  fill: #06f;
+  border-color: #6ca6c1;
+  color: #6ca6c1;
+  fill: #6ca6c1;
 }
 
 @media (min-width: 420px) {
@@ -57,22 +60,26 @@
   }
 }
 
-
 .ProseMirror {
+  font-family: RalewayLarge;
+  font-size: 20px;
   background-color: #fff;
-  border: 2px solid #000;
   box-sizing: border-box;
+  border: 2px solid #000;
   color: #000;
   cursor: pointer;
   letter-spacing: -0.8px;
   line-height: 24px;
   outline: 0;
   padding: 0.5em 1em;
-  margin: 0.5em 0;
   transition: all 0.3s;
-  border-radius: 5px;
 }
 
 .ProseMirror:hover {
-  border-color: #06f;
+  border-color: #6ca6c1;
+}
+
+.editor {
+  background-color: #fff;
+  border: 2px solid #000;
 }
