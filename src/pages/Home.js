@@ -1,3 +1,5 @@
 export default function Home() {
-  return <h1>welcome to mimir</h1>;
+  return (<>
+  <img src="svg/logo-no-background.svg"></img>
+  </>)
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Editor from "../components/Editor";
 
@@ -102,7 +102,24 @@ export default function Solver() {
 
       <h3>Target: {target}</h3>
 
-      <button className="menubutton">Generate Proof!</button>
+      <button className="menubutton" onClick={ () => {
+          fetch('https://32i8x8na33.execute-api.us-east-1.amazonaws.com/dev/api', {
+            method: 'POST',
+            body: JSON.stringify({
+              premises: premises,
+              target: target
+            }),
+            headers: {
+              'Content-type': 'application/json; charset=UTF-8',
+           },
+          }).then((response) => response.json())
+          .then((data) => {
+             console.log(data);
+          })
+          .catch((err) => {
+             console.log(err.message);
+          });
+      }}>Generate Proof!</button>
 
       <h3>Output:</h3>
     </>
