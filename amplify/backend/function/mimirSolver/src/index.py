@@ -48,7 +48,7 @@ def handler(event, context):
     possible_set = set()
     for premise in arg_premises:
         arg_state.append(input_decoder(premise))
-    arg_conclusion = Expression(arg_conclusion)
+    arg_conclusion = input_decoder(arg_conclusion)
     solution = solve(arg_state, possible_set, arg_conclusion)
 
     return {
@@ -66,37 +66,39 @@ def handler(event, context):
 def input_decoder(string_expression):
     expression_list = string_expression.split()
     token_stack = deque()
-    i = 0
-    while i < len(expression_list):
-        if expression_list[i] == ")":
-            sentence_2 = token_stack.pop()
-            if type(sentence_2) != Expression:
-                sentence_2 = Expression(sentence_2)
-            bin_connective = str(token_stack.pop())
-            sentence_1 = token_stack.pop()
-            if type(sentence_1) != Expression:
-                sentence_1 = Expression(sentence_1)
-            token_stack.pop()
-            expression1 = Expression(sentence_1, bin_connective, sentence_2)
-            token_stack.append(expression1)
-        elif expression_list[i] == "¬":
-            nexpression = Expression(
-                expression_list[i + 1], Expression(expression_list[i])
-            )
-            token_stack.append(nexpression)
+    if len(expression_list) == 1:
+        token_stack.append(Expression(expression_list[0]))
+    else:
+        i = 0
+        while i < len(expression_list):
+            if expression_list[i] == ')':
+                sentence_2 = token_stack.pop()
+                if type(sentence_2) != Expression:
+                    sentence_2 = Expression(sentence_2)
+                bin_connective = str(token_stack.pop())
+                sentence_1 = token_stack.pop()
+                if type(sentence_1) != Expression:
+                    sentence_1 = Expression(sentence_1)
+                token_stack.pop()
+                expression1 = Expression(sentence_1, bin_connective, sentence_2)
+                token_stack.append(expression1)
+            elif expression_list[i] == '¬':
+                nexpression = Expression(expression_list[i+1],Expression(expression_list[i]))
+                token_stack.append(nexpression)
+                i += 1
+            else:
+                token_stack.append(expression_list[i])
             i += 1
-        else:
-            token_stack.append(expression_list[i])
-        i += 1
     return token_stack.pop()
 
 
 class Expression:
-    def __init__(self, sentence_1, connective=None, sentence_2=None):
+
+    def __init__(self, sentence_1, connective = None, sentence_2 = None):
         self.sentence_1 = sentence_1
         self.connective = connective
         self.sentence_2 = sentence_2
-
+        
     def __repr__(self):
         return str(self)
 
@@ -104,17 +106,13 @@ class Expression:
         if self.connective is None:
             return str(self.sentence_1)
         if self.connective is not None and self.sentence_2 is not None:
-            return f"( {self.sentence_1} {self.connective} {self.sentence_2} )"
+            return f'( {self.sentence_1} {self.connective} {self.sentence_2} )'
         if self.connective is not None and self.sentence_2 is None:
-            return f"{self.connective} {self.sentence_1}"
-
+            return f'{self.connective} {self.sentence_1}'
+    
     def __eq__(self, other):
-        return (
-            self.connective == other.connective
-            and self.sentence_1 == other.sentence_1
-            and self.sentence_2 == other.sentence_2
-        )
-
+        return self.connective == other.connective and self.sentence_1 == other.sentence_1 and self.sentence_2 == other.sentence_2
+    
     def __hash__(self):
         return hash(self.__repr__())
 

@@ -21,8 +21,11 @@
       "function": {
         "mimirSolver": {
           "deploymentBucketName": "amplify-mimir-dev-231307-deployment",
-          "s3Key": "amplify-builds/mimirSolver-56736537504443536631-build.zip"
+          "s3Key": "amplify-builds/mimirSolver-66427835574d6a553343-build.zip"
         }
+      },
+      "api": {
+        "mimirREST": {}
       }
     }
   }
