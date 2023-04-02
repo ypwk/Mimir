@@ -5,7 +5,7 @@ import styled from "styled-components";
 const linkStyle = {
   margin: "1rem",
   textDecoration: "none",
-  color: "blue",
+  color: "white",
 };
 
 function App() {
@@ -19,7 +19,7 @@ function App() {
           <ul>
             <li>
               <Link to="/solve" style={linkStyle}>
-                Solver
+                solver
               </Link>
             </li>
           </ul>
