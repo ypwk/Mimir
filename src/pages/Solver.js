@@ -51,25 +51,26 @@ export default function Solver() {
   let output_render = [];
   premises.forEach((p) => {
     if(key < premises.length) {
-      output_render.push(<tr className="tableRow">
-        <td key={key} className="tableCell">{key}</td>
-        <td key={key} className="tableCell Line">{p}</td>
-        <td key={key} className="tableCell">P</td>
-        <td key={key} className="tableCell"></td>
+      output_render.push(<tr key={key} className="tableRow">
+        <td key={key * 4} className="tableCell">{key}</td>
+        <td key={key * 4 + 1} className="tableCell Line">{p}</td>
+        <td key={key * 4 + 2} className="tableCell">P</td>
+        <td key={key * 4 + 3} className="tableCell"></td>
       </tr>
       );
     } else {
-      output_render.push(<tr className="tableRow">
-        <td key={key} className="tableCell">{key}</td>
-        <td key={key} className="tableCell Bottom">{p}</td>
-        <td key={key} className="tableCell">P</td>
-        <td key={key} className="tableCell">⊢{target}</td>
+      output_render.push(<tr key={key} className="tableRow">
+        <td key={key * 4} className="tableCell">{key}</td>
+        <td key={key * 4 + 1} className="tableCell Bottom">{p}</td>
+        <td key={key * 4 + 2} className="tableCell">P</td>
+        <td key={key * 4 + 3} className="tableCell">⊢{target}</td>
       </tr>
       );
     }
     key += 1;
   });
 
+  console.log(output)
   output.forEach(o => {
     if(o[1].length === 1) {
       let firstIndex = premises.indexOf(o[1][0]) + 1;
@@ -80,11 +81,11 @@ export default function Solver() {
           }
         }
       }
-      output_render.push(<tr className="tableRow">
-        <td key={key} className="tableCell">{key}</td>
-        <td key={key} className="tableCell Line">{o[2]}</td>
-        <td key={key} className="tableCell">{firstIndex} {o[0]}</td>
-        <td key={key} className="tableCell"></td>
+      output_render.push(<tr key={key} className="tableRow">
+        <td key={key * 4} className="tableCell">{key}</td>
+        <td key={key * 4 + 1} className="tableCell Line">{o[2]}</td>
+        <td key={key * 4 + 2} className="tableCell">{firstIndex} {o[0]}</td>
+        <td key={key * 4 + 3} className="tableCell"></td>
       </tr>);
     } else {
       let firstIndex = premises.indexOf(o[1][0]) + 1;
@@ -103,11 +104,11 @@ export default function Solver() {
           }
         }
       }
-      output_render.push(<tr className="tableRow">
-        <td key={key} className="tableCell">{key}</td>
-        <td key={key} className="tableCell Line">{o[2]}</td>
-        <td key={key} className="tableCell">{firstIndex},{secondIndex} {o[0]}</td>
-        <td key={key} className="tableCell"></td>
+      output_render.push(<tr key={key} className="tableRow">
+        <td key={key * 4} className="tableCell">{key}</td>
+        <td key={key * 4 + 1} className="tableCell Line">{o[2]}</td>
+        <td key={key * 4 + 2} className="tableCell">{firstIndex},{secondIndex} {o[0]}</td>
+        <td key={key * 4 + 3} className="tableCell"></td>
       </tr>);
     }
 
@@ -185,8 +186,11 @@ export default function Solver() {
             },
             }).then((response) => response.json())
             .then((data) => {
-              setOutput(data);
-              console.log(data);
+              if(data['message'] !== "Internal server error") {
+                setOutput(data);
+              } else {
+                alert("Something went wrong!")
+              }
             })
             .catch((err) => {
               console.log(err.message);
