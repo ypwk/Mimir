@@ -45,6 +45,7 @@ function checkValidity(input) {
 export default function Solver() {
   const [premises, setPremises] = useState([]);
   const [target, setTarget] = useState("");
+  const [output, setOutput] = useState([]);
 
   let premise_render = [];
   let key = 0;
@@ -53,9 +54,16 @@ export default function Solver() {
     key += 1;
   });
 
+  let output_render = [];
+  key = 0;
+  output.forEach(o => {
+    output_render.push(<p key={key}>{o}</p>);
+    key += 1;
+  })
+
   return (
-    <>
-      <h3>Input Premises:</h3>
+    <div className="container">
+      <h3>input premises:</h3>
       <Editor
         enterCallback={(editor_view) => {
           let content = editor_view.state.doc.textContent.replace(/\s+/g, '').trim();
@@ -79,7 +87,7 @@ export default function Solver() {
           }
         }}
       />
-      <h3>Input Target:</h3>
+      <h3>input target:</h3>
       <Editor
         enterCallback={(editor_view) => {
           let content = editor_view.state.doc.textContent.replace(/\s+/g, '').trim();
@@ -98,30 +106,30 @@ export default function Solver() {
         }}
       />
 
-      <h3>Premises: {premise_render}</h3>
+      <h3>premises: {premise_render}</h3>
 
-      <h3>Target: {target}</h3>
+      <h3>target: {target}</h3>
 
       <button className="menubutton" onClick={ () => {
           fetch('https://32i8x8na33.execute-api.us-east-1.amazonaws.com/dev/api', {
             method: 'POST',
             body: JSON.stringify({
-              premises: premises,
-              target: target
+              "premises": premises,
+              "target": target
             }),
             headers: {
               'Content-type': 'application/json; charset=UTF-8',
            },
           }).then((response) => response.json())
           .then((data) => {
-             console.log(data);
+             setOutput(data);
           })
           .catch((err) => {
              console.log(err.message);
           });
-      }}>Generate Proof!</button>
+      }}>generate proof</button>
 
-      <h3>Output:</h3>
-    </>
+      <h3>output: {output_render} </h3>
+    </div>
   );
 }

@@ -3,6 +3,11 @@
   src: url(Raleway-Thin.ttf) format('truetype');
 }
 
+@font-face {
+  font-family: RalewayLarge;
+  src: url(Raleway-Light.ttf) format('truetype');
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -11,7 +16,7 @@
 }
 
 body {
-  background-color: #343434;
+  background-color: #151515;
   color: #fff;
   font-family: 'Raleway';
   font-weight: 100;
@@ -60,9 +65,35 @@ main {
   text-align: center;
   font-size: 10em;
   pointer-events: none;
-
+  margin-top: 1em;
+  margin-bottom: 1em;
   -webkit-user-select: none; /* Safari */
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* IE10+/Edge */
   user-select: none; /* Standard */
+}
+
+.description {
+  background-color: #151515;
+  position: absolute;
+  top: 100%;
+}
+
+.downarrow {
+  position: absolute;
+  top: 90%;
+  width: 100%;
+  text-align: center;
+  font-size: 50px;
+}
+
+.container {
+  background-color: #343434;
+  padding: 1em;
+  margin: 1em;
+}
+
+.editor {
+  background-color: #fff;
+
 }

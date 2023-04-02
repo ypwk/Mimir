@@ -21,6 +21,10 @@ export default function Home() {
           {backshape}
         </div>
       </div>
+      <p className="downarrow">v</p>
+      <div className="description">
+        <h2>Mimir is a </h2>
+      </div>
     </>
 
   );

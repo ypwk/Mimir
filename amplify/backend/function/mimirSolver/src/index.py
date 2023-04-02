@@ -40,8 +40,10 @@ def handler(event, context):
     print("received event:")
     print(event)
 
-    arg_premises = event["premises"]
-    arg_conclusion = event["target"]
+    input_dict = json.loads(event['body'])
+
+    arg_premises = input_dict["premises"]
+    arg_conclusion = input_dict["target"]
     arg_state = deque()
     possible_set = set()
     for premise in arg_premises:
@@ -57,6 +59,7 @@ def handler(event, context):
             "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
         },
         "body": json.dumps(solution),
+        "isBase64Encoded": False
     }
 
 
@@ -118,36 +121,142 @@ class Expression:
 
 def solve(state, set, target):
     solution_history = []
-    while target not in set:
-        temp_expression = state.popleft()
-        if temp_expression.connective == "∧":
-            if temp_expression.sentence_1.sentence_2 is None:
-                set.add(temp_expression.sentence_1)
-            else:
-                state.append(temp_expression.sentence_1)
-            solution_history += [
-                ["∧E", [str(temp_expression)], str(temp_expression.sentence_1)]
-            ]
-            if temp_expression.sentence_2.sentence_2 is None:
-                set.add(temp_expression.sentence_2)
-            else:
-                state.append(temp_expression.sentence_2)
-            solution_history += [
-                ["∧E", [str(temp_expression)], str(temp_expression.sentence_2)]
-            ]
-        if temp_expression.connective == "→":
-            if temp_expression.sentence_1 in set:
+    if target.sentence_2 is None:
+        while target not in set:
+            temp_expression = state.popleft()
+            if temp_expression.connective == "∧":
+                if temp_expression.sentence_1.sentence_2 is None:
+                    set.add(temp_expression.sentence_1)
+                else:
+                    state.append(temp_expression.sentence_1)
+                    set.add(temp_expression.sentence_1)
+                solution_history += [
+                    ["∧E", [str(temp_expression)], str(temp_expression.sentence_1)]
+                ]
                 if temp_expression.sentence_2.sentence_2 is None:
                     set.add(temp_expression.sentence_2)
                 else:
                     state.append(temp_expression.sentence_2)
+                    set.add(temp_expression.sentence_2)
                 solution_history += [
-                    [
-                        "→E",
-                        [str(temp_expression), str(temp_expression.sentence_1)],
-                        str(temp_expression.sentence_2),
-                    ]
+                    ["∧E", [str(temp_expression)], str(temp_expression.sentence_2)]
                 ]
-            else:
-                state.append(temp_expression)
+            if temp_expression.connective == "→":
+                if temp_expression.sentence_1 in set:
+                    if temp_expression.sentence_2.sentence_2 is None:
+                        set.add(temp_expression.sentence_2)
+                    else:
+                        state.append(temp_expression.sentence_2)
+                        set.add(temp_expression.sentence_2)
+                    solution_history += [
+                        [
+                            "→E",
+                            [str(temp_expression), str(temp_expression.sentence_1)],
+                            str(temp_expression.sentence_2)
+                        ]
+                    ]
+                else:
+                    state.append(temp_expression)
+            if temp_expression.connective == "↔":
+                if temp_expression.sentence_1 in set:
+                    if temp_expression.sentence_2.sentence_2 is None:
+                        set.add(temp_expression.sentence_2)
+                    else:
+                        state.append(temp_expression.sentence_2)
+                        set.add(temp_expression.sentence_2)
+                    solution_history += [
+                        [
+                            "↔E",
+                            [str(temp_expression), str(temp_expression.sentence_1)],
+                            str(temp_expression.sentence_2)
+                        ]
+                    ]
+                elif temp_expression.sentence_2 in set:
+                    if temp_expression.sentence_1.sentence_2 is None:
+                        set.add(temp_expression.sentence_1)
+                    else:
+                        state.append(temp_expression.sentence_1)
+                        set.add(temp_expression.sentence_1)
+                    solution_history += [
+                        [
+                            "↔E",
+                            [str(temp_expression), str(temp_expression.sentence_2)],
+                            str(temp_expression.sentence_1)
+                        ]
+                    ]
+                else:
+                    state.append(temp_expression)
+
+    elif target.connective == '∧':
+        while target.sentence_1 not in set or target.sentence_2 not in set:
+            temp_expression = state.popleft()
+            if temp_expression.connective == "∧":
+                if temp_expression.sentence_1.sentence_2 is None:
+                    set.add(temp_expression.sentence_1)
+                else:
+                    state.append(temp_expression.sentence_1)
+                    set.add(temp_expression.sentence_1)
+                solution_history += [
+                    ["∧E", [str(temp_expression)], str(temp_expression.sentence_1)]
+                ]
+                if temp_expression.sentence_2.sentence_2 is None:
+                    set.add(temp_expression.sentence_2)
+                else:
+                    state.append(temp_expression.sentence_2)
+                    set.add(temp_expression.sentence_2)
+                solution_history += [
+                    ["∧E", [str(temp_expression)], str(temp_expression.sentence_2)]
+                ]
+            if temp_expression.connective == "→":
+                if temp_expression.sentence_1 in set:
+                    if temp_expression.sentence_2.sentence_2 is None:
+                        set.add(temp_expression.sentence_2)
+                    else:
+                        state.append(temp_expression.sentence_2)
+                        set.add(temp_expression.sentence_2)
+                    solution_history += [
+                        [
+                            "→E",
+                            [str(temp_expression), str(temp_expression.sentence_1)],
+                            str(temp_expression.sentence_2)
+                        ]
+                    ]
+                else:
+                    state.append(temp_expression)
+            if temp_expression.connective == "↔":
+                if temp_expression.sentence_1 in set:
+                    if temp_expression.sentence_2.sentence_2 is None:
+                        set.add(temp_expression.sentence_2)
+                    else:
+                        state.append(temp_expression.sentence_2)
+                        set.add(temp_expression.sentence_2)
+                    solution_history += [
+                        [
+                            "↔E",
+                            [str(temp_expression), str(temp_expression.sentence_1)],
+                            str(temp_expression.sentence_2)
+                        ]
+                    ]
+                elif temp_expression.sentence_2 in set:
+                    if temp_expression.sentence_1.sentence_2 is None:
+                        set.add(temp_expression.sentence_1)
+                    else:
+                        state.append(temp_expression.sentence_1)
+                        set.add(temp_expression.sentence_1)
+                    solution_history += [
+                        [
+                            "↔E",
+                            [str(temp_expression), str(temp_expression.sentence_2)],
+                            str(temp_expression.sentence_1)
+                        ]
+                    ]
+                else:
+                    state.append(temp_expression)
+        solution_history += [
+            [
+                "∧I",
+                [str(target.sentence_1),str(target.sentence_2)],
+                str(target)
+            ]
+        ]
     return solution_history

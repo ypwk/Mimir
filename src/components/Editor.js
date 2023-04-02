@@ -84,9 +84,9 @@ export default function Editor({ enterCallback }) {
     setEditor(e);
   }
   return (
-    <>
+    <div className="editor">
       <MenuBar editor={editor} />
       <EditorContent editor={editor} />
-    </>
+    </div>
   );
 }
